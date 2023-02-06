@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dap1p34sacwii"]
+
+[ext_resource type="Script" path="res://mob.gd" id="1_55f8s"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ksv68"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pqbn3"]
+albedo_color = Color(0.592157, 0.0196078, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yw80g"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hn58k"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+
+[node name="mob" type="CharacterBody3D"]
+script = ExtResource("1_55f8s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ksv68")
+surface_material_override/0 = SubResource("StandardMaterial3D_pqbn3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_yw80g")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_hn58k")

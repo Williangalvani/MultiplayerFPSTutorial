@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8oqxmm2w2wvv"]
+[gd_scene load_steps=12 format=3 uid="uid://c8oqxmm2w2wvv"]
 
 [ext_resource type="Script" path="res://world.gd" id="1_6tkge"]
 [ext_resource type="Texture2D" uid="uid://8ka2ui7sq36p" path="res://addons/kenney_particle_pack/circle_05.png" id="3_ehmxv"]
 [ext_resource type="PackedScene" uid="uid://dvtrij6nywdb4" path="res://my_environment.tscn" id="3_kiibu"]
+[ext_resource type="Script" path="res://spawner.gd" id="4_bspcb"]
+[ext_resource type="PackedScene" uid="uid://dap1p34sacwii" path="res://mob.tscn" id="5_423u4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u5pdl"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -22,6 +24,13 @@ bg_color = Color(1, 0.117647, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cmecq"]
 bg_color = Color(0.00392157, 1, 0, 1)
+
+[sub_resource type="Curve3D" id="Curve3D_82om5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 5.37195, 0.0237714, -7.35513, 0, 0, 0, 0, 0, 0, 4.67969, -0.0860841, -13.6718),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
 
 [node name="World" type="Node"]
 script = ExtResource("1_6tkge")
@@ -73,6 +82,7 @@ text = "Join"
 
 [node name="AddressEntry" type="LineEdit" parent="CanvasLayer/MainMenu/MarginContainer/VBoxContainer"]
 layout_mode = 2
+text = "localhost"
 placeholder_text = "Enter Address to Join Here"
 alignment = 1
 
@@ -115,13 +125,30 @@ max_value = 3.0
 value = 3.0
 show_percentage = false
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player.tscn")
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player.tscn", "res://mob.tscn")
 spawn_path = NodePath("..")
 
 [node name="myEnvironment" parent="." instance=ExtResource("3_kiibu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.70575, -0.328503, 2.44172)
 
+[node name="SpawnPath" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.44555, 0)
+curve = SubResource("Curve3D_82om5")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(-0.994048, -0.00188306, -0.108924, -1.74623e-10, 0.99985, -0.0172853, 0.10894, -0.0171824, -0.9939, 4.87095, 0.0237714, -7.30022)
+h_offset = 0.504
+
+[node name="spawner" type="Node" parent="."]
+script = ExtResource("4_bspcb")
+mob_scene = ExtResource("5_423u4")
+
+[node name="s" type="Timer" parent="spawner"]
+wait_time = 10.0
+autostart = true
+
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
-[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
+[connection signal="spawned" from="PlayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
+[connection signal="timeout" from="spawner/s" to="spawner" method="_on_mob_timer_timeout"]

@@ -5,7 +5,7 @@ extends Node
 @onready var hud = $CanvasLayer/HUD
 @onready var health_bar = $CanvasLayer/HUD/HealthBar
 
-
+var players = []
 const Player = preload("res://player.tscn")
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
@@ -36,13 +36,16 @@ func _on_join_button_pressed():
 
 func add_player(peer_id):
 	var player = Player.instantiate()
+	players.append(player)
 	player.name = str(peer_id)
 	add_child(player)
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
+	print(players)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
+	players.erase(player)
 	if player:
 		player.queue_free()
 
@@ -63,8 +66,10 @@ func upnp_setup():
 	assert(upnp.get_gateway() and upnp.get_gateway().is_valid_gateway(), \
 		"UPNP Invalid Gateway!")
 
-	var map_result = upnp.add_port_mapping(PORT)
-	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Port Mapping Failed! Error %s" % map_result)
+	# var map_result = upnp.add_port_mapping(PORT)
+	# assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
+	# 	"UPNP Port Mapping Failed! Error %s" % map_result)
 	
-	print("Success! Join Address: %s" % upnp.query_external_address())
+	# print("Success! Join Address: %s" % upnp.query_external_address())
+
+
