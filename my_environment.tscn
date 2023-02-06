@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://dvtrij6nywdb4"]
+
+[ext_resource type="PackedScene" uid="uid://doim4lfb5lq1" path="res://blender/myEnvironment.blend" id="1_ntrtj"]
+[ext_resource type="Texture2D" uid="uid://cxrpi6xe87fvc" path="res://addons/kenney_prototype_textures/dark/texture_01.png" id="2_ebip4"]
+[ext_resource type="Texture2D" uid="uid://cq3gcy12hn2mk" path="res://addons/kenney_prototype_textures/red/texture_01.png" id="3_h30fa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y62pk"]
+cull_mode = 2
+albedo_texture = ExtResource("2_ebip4")
+uv1_scale = Vector3(6.685, 6.685, 6.685)
+uv1_triplanar = true
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_v4ijb"]
+data = PackedVector3Array(-1, 0, 1, 1, 0, -1, -1, 0, -1, -1, 0, 1, 1, 0, 1, 1, 0, -1, 1, 0, 1, 1, 0, 1, 1, 0, -1, 1, 0, -1, 1, 0, 1, 1, 0, -1, -1, 0, -1, -1, 0, -1, -1, 0, 1, -1, 0, 1, -1, 0, -1, -1, 0, 1, 1, 0, -1, 1, 0, -1, -1, 0, -1, -1, 0, -1, 1, 0, -1, -1, 0, -1, -1, 0, 1, -1, 0, 1, 1, 0, 1, 1, 0, 1, -1, 0, 1, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0dud"]
+albedo_texture = ExtResource("3_h30fa")
+uv1_scale = Vector3(1.526, 1.526, 1.526)
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rccbt"]
+size = Vector3(33.1767, 2.57737, 2.08856)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ty7ce"]
+size = Vector3(33.3547, 19.9363, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kkrdp"]
+size = Vector3(1.98926, 19.3101, 2.07227)
+
+[node name="myEnvironment" instance=ExtResource("1_ntrtj")]
+
+[node name="ground-" parent="." index="1"]
+surface_material_override/0 = SubResource("StandardMaterial3D_y62pk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground-" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground-/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_v4ijb")
+disabled = true
+
+[node name="roads" parent="." index="5"]
+surface_material_override/0 = SubResource("StandardMaterial3D_y0dud")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="roads" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="roads/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35761, 7.79291, 0)
+shape = SubResource("BoxShape3D_rccbt")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="roads/StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.76749, 8.27373, -0.312914)
+shape = SubResource("BoxShape3D_ty7ce")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="roads/StaticBody3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00666261, 8.55658, 0.0326464)
+shape = SubResource("BoxShape3D_kkrdp")
