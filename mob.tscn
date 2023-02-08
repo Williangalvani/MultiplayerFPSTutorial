@@ -29,3 +29,5 @@ shape = SubResource("SphereShape3D_yw80g")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_hn58k")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]

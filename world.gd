@@ -73,3 +73,7 @@ func upnp_setup():
 	# print("Success! Join Address: %s" % upnp.query_external_address())
 
 
+
+
+func _on_player_spawner_2_spawned(node):
+	print(node)

@@ -16,17 +16,14 @@ func _on_mob_timer_timeout():
 	# Create a new instance of the Mob scene.
 	
 	var players: Array = $"..".players
-	if players.size() == 0:
-		print("no player")
-		return
-	var player = players[randi() % players.size()]
 	var mob = mob_scene.instantiate()
-	# Choose a random location on the SpawnPath.
-	# We store the reference to the SpawnLocation node.
-	var mob_spawn_location = $"../SpawnPath/SpawnLocation"
-	# And give it a random offset.
-	mob_spawn_location.h_offset = randf()
+	if players.size() > 0:
+		var player = players[randi() % players.size()]
+		# Choose a random location on the SpawnPath.
+		# We store the reference to the SpawnLocation node.
+		var mob_spawn_location = $"../SpawnPath/SpawnLocation"
+		# And give it a random offset.
+		mob_spawn_location.h_offset = randf()
 
-	var player_position = player.transform.origin
-	mob.initialize(mob_spawn_location.transform.origin, player_position)
+		mob.initialize(mob_spawn_location.transform.origin, player)
 	$"..".add_child(mob)
