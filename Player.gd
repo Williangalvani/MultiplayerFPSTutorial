@@ -14,6 +14,8 @@ const JUMP_VELOCITY = 10.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = 20.0
+@export var remote_position: Vector3 = Vector3.ZERO
+var remote_orientation
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -40,7 +42,9 @@ func _unhandled_input(event):
 			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 
 func _physics_process(delta):
-	if not is_multiplayer_authority(): return
+	if not is_multiplayer_authority():
+		self.transform.origin = lerp(self.transform.origin, remote_position, 0.1)
+		return
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -68,6 +72,7 @@ func _physics_process(delta):
 	else:
 		anim_player.play("idle")
 
+	remote_position = global_transform.origin
 	move_and_slide()
 
 @rpc("call_local")
