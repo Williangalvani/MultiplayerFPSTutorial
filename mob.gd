@@ -18,7 +18,7 @@ func _ready():
 	speed = randf_range(min_speed, max_speed)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if !player:
 		return
 	agent.target_position = player.global_transform.origin
@@ -27,15 +27,16 @@ func _physics_process(delta):
 		return
 	if agent.is_target_reachable():
 		var target = agent.get_next_path_position()
-		var velocity = global_transform.origin.direction_to(target).normalized() * self.max_speed
-		agent.set_velocity(velocity)
-		self.velocity = velocity
+		var new_velocity = global_transform.origin.direction_to(target).normalized() * self.max_speed
+		agent.set_velocity(new_velocity)
+		self.velocity = new_velocity
 		move_and_slide()
 
 
 
 # We will call this function from the Main scene.
-func initialize(start_position, player):
-	self.player = player
+func initialize(start_position, player_):
+	self.player = player_
+	self.transform.origin = start_position
 	var agent = $NavigationAgent3D
 	agent.target_position = player.transform.origin

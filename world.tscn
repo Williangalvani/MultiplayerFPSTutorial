@@ -133,7 +133,7 @@ show_percentage = false
 _spawnable_scenes = PackedStringArray("res://player.tscn")
 spawn_path = NodePath("..")
 
-[node name="PlayerSpawner2" type="MultiplayerSpawner" parent="."]
+[node name="MobSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://mob.tscn")
 spawn_path = NodePath("..")
 
@@ -162,5 +162,4 @@ navigation_mesh = SubResource("NavigationMesh_7kkgf")
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="spawned" from="PlayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
-[connection signal="spawned" from="PlayerSpawner2" to="." method="_on_player_spawner_2_spawned"]
 [connection signal="timeout" from="spawner/mob_timer" to="spawner" method="_on_mob_timer_timeout"]

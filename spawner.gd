@@ -8,11 +8,13 @@ func _ready():
 	randomize()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 
 func _on_mob_timer_timeout():
+	if not is_multiplayer_authority():
+		return
 	# Create a new instance of the Mob scene.
 	
 	var players: Array = $"..".players
@@ -26,4 +28,4 @@ func _on_mob_timer_timeout():
 		mob_spawn_location.h_offset = randf()
 
 		mob.initialize(mob_spawn_location.transform.origin, player)
-	$"..".add_child(mob)
+	$"..".add_child(mob, true)

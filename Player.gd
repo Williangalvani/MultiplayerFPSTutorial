@@ -28,7 +28,6 @@ func _ready():
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority(): return
-	
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * .005)
 		camera.rotate_x(-event.relative.y * .005)

@@ -10,7 +10,7 @@ const Player = preload("res://player.tscn")
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 
@@ -71,9 +71,3 @@ func upnp_setup():
 	# 	"UPNP Port Mapping Failed! Error %s" % map_result)
 	
 	# print("Success! Join Address: %s" % upnp.query_external_address())
-
-
-
-
-func _on_player_spawner_2_spawned(node):
-	print(node)
