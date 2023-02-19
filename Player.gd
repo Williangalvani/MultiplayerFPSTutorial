@@ -38,6 +38,7 @@ func _unhandled_input(event):
 		play_shoot_effects.rpc()
 		if raycast.is_colliding():
 			var hit_player = raycast.get_collider()
+			print(hit_player)
 			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 
 func _physics_process(delta):
@@ -83,6 +84,7 @@ func play_shoot_effects():
 
 @rpc("any_peer")
 func receive_damage():
+	print("calling player's")
 	health -= 1
 	if health <= 0:
 		health = 3

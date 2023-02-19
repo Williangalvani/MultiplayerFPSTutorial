@@ -10,6 +10,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 # Maximum speed of the mob in meters per second.
 @export var max_speed = 1.5
 
+@export var max_hp = 3.0
+@export var hp = max_hp
 var player
 var speed
 
@@ -19,6 +21,12 @@ func _ready():
 
 
 func _physics_process(_delta):
+	var hp_percent = hp/max_hp
+	var hp_color: Color = Color(1-hp_percent,hp_percent,0)
+	var material: StandardMaterial3D = $hp.get_surface_override_material(0)
+	if material.albedo_color != hp_color:
+		material.albedo_color = hp_color
+		$hp.set_surface_override_material(0, material)
 	if !player:
 		return
 	agent.target_position = player.global_transform.origin
@@ -38,5 +46,16 @@ func _physics_process(_delta):
 func initialize(start_position, player_):
 	self.player = player_
 	self.transform.origin = start_position
-	var agent = $NavigationAgent3D
+	agent = $NavigationAgent3D
 	agent.target_position = player.transform.origin
+	$hp.set_surface_override_material(0, $hp.get_surface_override_material(0).duplicate())
+	
+@rpc("any_peer", "call_local")
+func receive_damage():
+	hp = hp - 1.0
+	if hp <= 0:
+		self.die()
+
+func die():
+	self.queue_free()
+	
