@@ -26,6 +26,7 @@ func _on_host_button_pressed():
 	add_player(multiplayer.get_unique_id())
 	
 	upnp_setup()
+	$spawner/mob_timer.start()
 
 func _on_join_button_pressed():
 	main_menu.hide()

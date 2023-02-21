@@ -151,7 +151,6 @@ mob_scene = ExtResource("5_423u4")
 
 [node name="mob_timer" type="Timer" parent="spawner"]
 wait_time = 10.0
-autostart = true
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33857, -0.603978, -0.194658)
