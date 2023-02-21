@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://b3m6h56kepg06"]
+
+[ext_resource type="PackedScene" uid="uid://iyb8p3e55be1" path="res://blender/staff.blend" id="1_mx3wf"]
+[ext_resource type="Texture2D" uid="uid://xbrk6gd3qh7k" path="res://addons/kenney_particle_pack/fire_01.png" id="2_nalma"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifkxj"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_nalma")
+texture_filter = 0
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="Curve_0kxvw"]
+_data = [Vector2(0, 0), 0.0, 5.55084, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_81023"]
+curve = SubResource("Curve_0kxvw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d6akj"]
+direction = Vector3(2.08165e-12, 1, 2.08165e-12)
+spread = 0.48
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+initial_velocity_min = 0.5
+initial_velocity_max = 0.5
+angular_velocity_min = -50.0
+angular_velocity_max = 50.0
+linear_accel_min = 1.0
+linear_accel_max = 1.0
+angle_max = 360.0
+scale_curve = SubResource("CurveTexture_81023")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ot3q5"]
+
+[node name="staff" instance=ExtResource("1_mx3wf")]
+
+[node name="Cylinder" parent="." index="0"]
+transform = Transform3D(0.0500365, 0, 0, 0, 0.0500365, 0, 0, 0, 0.0500365, 0, -0.555048, 0)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." index="1"]
+transform = Transform3D(0.625456, 0, 0, 0, 0.625456, 0, 0, 0, 0.625456, 0, 0.710269, 0)
+material_override = SubResource("StandardMaterial3D_ifkxj")
+amount = 6
+visibility_aabb = AABB(-1.04927, -0.461682, -0.441301, 2.0126, 0.923364, 0.724399)
+process_material = SubResource("ParticleProcessMaterial_d6akj")
+draw_pass_1 = SubResource("QuadMesh_ot3q5")
