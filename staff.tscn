@@ -10,29 +10,28 @@ vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_nalma")
 texture_filter = 0
 billboard_mode = 3
+billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="Curve" id="Curve_0kxvw"]
-_data = [Vector2(0, 0), 0.0, 5.55084, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+[sub_resource type="Curve" id="Curve_uodgw"]
+_data = [Vector2(0, 0), 0.0, 2.87548, 0, 0, Vector2(0.496742, 0.664461), 0.0, 0.0, 0, 0, Vector2(1, 0.015753), -3.64787, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_81023"]
-curve = SubResource("Curve_0kxvw")
+[sub_resource type="CurveTexture" id="CurveTexture_ll6l8"]
+curve = SubResource("Curve_uodgw")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d6akj"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6ni77"]
 direction = Vector3(2.08165e-12, 1, 2.08165e-12)
-spread = 0.48
+spread = 5.0
 gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
-initial_velocity_min = 0.5
-initial_velocity_max = 0.5
-angular_velocity_min = -50.0
-angular_velocity_max = 50.0
-linear_accel_min = 1.0
-linear_accel_max = 1.0
-angle_max = 360.0
-scale_curve = SubResource("CurveTexture_81023")
+initial_velocity_min = 0.2
+initial_velocity_max = 0.8
+angular_velocity_max = 0.5
+angle_min = -28.2
+angle_max = 20.0
+scale_curve = SubResource("CurveTexture_ll6l8")
 
 [sub_resource type="QuadMesh" id="QuadMesh_ot3q5"]
 
@@ -46,5 +45,6 @@ transform = Transform3D(0.625456, 0, 0, 0, 0.625456, 0, 0, 0, 0.625456, 0, 0.710
 material_override = SubResource("StandardMaterial3D_ifkxj")
 amount = 6
 visibility_aabb = AABB(-1.04927, -0.461682, -0.441301, 2.0126, 0.923364, 0.724399)
-process_material = SubResource("ParticleProcessMaterial_d6akj")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_6ni77")
 draw_pass_1 = SubResource("QuadMesh_ot3q5")
