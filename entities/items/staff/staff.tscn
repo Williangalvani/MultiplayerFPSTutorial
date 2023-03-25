@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://wn2do61ydj14"]
+
+[ext_resource type="Texture2D" uid="uid://cbawhvb7ky3ey" path="res://addons/Shikashi's Fantasy Icons Pack v2/shikashi_atlas.tres" id="1_snrdo"]
+
+[node name="staff" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture_filter = 0
+texture = ExtResource("1_snrdo")

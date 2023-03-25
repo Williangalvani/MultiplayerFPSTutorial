@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsy0xg7umj7tc"]
+
+[ext_resource type="Texture2D" uid="uid://cbawhvb7ky3ey" path="res://addons/Shikashi's Fantasy Icons Pack v2/shikashi_atlas.tres" id="1_j4gig"]
+[ext_resource type="PackedScene" uid="uid://bfr5e5h3ovbx6" path="res://entities/effects/projectile.tscn" id="2_mwwte"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kkc5j"]
+radius = 0.184281
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_c44q0"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+properties/2/path = NodePath(".:scale")
+properties/2/spawn = true
+properties/2/sync = true
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+motion_mode = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 1
+texture_filter = 0
+texture = ExtResource("1_j4gig")
+
+[node name="projectile" parent="." instance=ExtResource("2_mwwte")]
+projectile_velocity = 10.0
+
+[node name="fireball" type="Node3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_kkc5j")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_c44q0")

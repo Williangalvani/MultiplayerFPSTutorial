@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ckf3250w8jpro"
-path="res://.godot/imported/Environment.glb-8e7d6fb98c52ec29ad01d3fe74a3c16f.scn"
+path="res://.godot/imported/Environment.glb-3b82e6cca358c52b41118436ef5765a3.scn"
 
 [deps]
 
-source_file="res://models/Environment.glb"
-dest_files=["res://.godot/imported/Environment.glb-8e7d6fb98c52ec29ad01d3fe74a3c16f.scn"]
+source_file="res://entities/models/Environment.glb"
+dest_files=["res://.godot/imported/Environment.glb-3b82e6cca358c52b41118436ef5765a3.scn"]
 
 [params]
 
@@ -26,6 +26,7 @@ skins/use_named_skins=true
 animation/import=true
 animation/fps=30
 animation/trimming=false
+animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={}
-meshes/handle_gltf_embedded_images=1
+gltf/embedded_image_handling=1

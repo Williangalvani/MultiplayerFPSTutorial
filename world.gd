@@ -42,6 +42,7 @@ func add_player(peer_id):
 	add_child(player)
 	if player.is_multiplayer_authority():
 		player.health_changed.connect(update_health_bar)
+		player.projectile_created.connect(create_projectiles)
 	print(players)
 
 func remove_player(peer_id):
@@ -53,19 +54,31 @@ func remove_player(peer_id):
 func update_health_bar(health_value):
 	health_bar.value = health_value
 
+
+@rpc("any_peer")
+func create_projectile(transform: Transform3D):
+	var projectile = preload("res://entities/items/magic/fireball.tscn").instantiate()
+	print("creating projectile!")
+	projectile.global_transform = transform
+	add_child(projectile, true)
+
+func create_projectiles(scene: PackedScene, transform: Transform3D):
+	create_projectile.rpc(transform)
+	
 func _on_multiplayer_spawner_spawned(node):
 	if node.is_multiplayer_authority():
 		node.health_changed.connect(update_health_bar)
+	node.projectile_created.connect(create_projectiles)
 
 func upnp_setup():
 	var upnp = UPNP.new()
 	
-	var discover_result = upnp.discover()
-	assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Discover Failed! Error %s" % discover_result)
+	#var discover_result = upnp.discover()
+	#assert(discover_result == UPNP.UPNP_RESULT_SUCCESS, \
+	#	"UPNP Discover Failed! Error %s" % discover_result)
 
-	assert(upnp.get_gateway() and upnp.get_gateway().is_valid_gateway(), \
-		"UPNP Invalid Gateway!")
+	#assert(upnp.get_gateway() and upnp.get_gateway().is_valid_gateway(), \
+	#	"UPNP Invalid Gateway!")
 
 	# var map_result = upnp.add_port_mapping(PORT)
 	# assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b3y5kjjsqlgkm"
-path="res://.godot/imported/myEnvironment.blend-5b9ced38eec8dc8a4130279ad61c2443.scn"
+uid="uid://mac0dv2rhasx"
+path="res://.godot/imported/Pistol 2.blend-173c60d0ca9cfa3183a717bc9af67fa4.scn"
 
 [deps]
 
-source_file="res://blender/myEnvironment.blend"
-dest_files=["res://.godot/imported/myEnvironment.blend-5b9ced38eec8dc8a4130279ad61c2443.scn"]
+source_file="res://entities/models/Pistol 2.blend"
+dest_files=["res://.godot/imported/Pistol 2.blend-173c60d0ca9cfa3183a717bc9af67fa4.scn"]
 
 [params]
 
