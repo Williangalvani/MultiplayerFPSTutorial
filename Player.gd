@@ -1,11 +1,13 @@
 extends CharacterBody3D
 
 signal health_changed(health_value)
+signal projectile_created(projectile: PackedScene, transform: Transform3D)
 
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
 @onready var muzzle_flash = $Camera3D/Pistol/MuzzleFlash
 @onready var raycast = $Camera3D/RayCast3D
+@export var fireball_scene: PackedScene
 
 var health = 3
 
@@ -16,6 +18,7 @@ const JUMP_VELOCITY = 10.0
 var gravity = 20.0
 @export var remote_position: Vector3 = Vector3.ZERO
 var remote_orientation
+var world: Node = null
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
@@ -25,6 +28,8 @@ func _ready():
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.current = true
+	self.world = get_tree().get_root().get_node("World")
+	print(self.world)
 
 func _unhandled_input(event):
 	if not is_multiplayer_authority(): return
@@ -36,8 +41,9 @@ func _unhandled_input(event):
 	if Input.is_action_just_pressed("shoot") \
 			and anim_player.current_animation != "shoot":
 		play_shoot_effects.rpc()
-		if raycast.is_colliding():
-			var hit_player = raycast.get_collider()
+		projectile_created.emit(fireball_scene, $Camera3D/projectileSpawnPoint.global_transform)
+		var hit_player = raycast.get_collider()
+		if hit_player:
 			print(hit_player)
 			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 
