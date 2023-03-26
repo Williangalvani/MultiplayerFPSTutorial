@@ -16,14 +16,11 @@ func _unhandled_input(_event):
 
 func _on_host_button_pressed():
 	main_menu.hide()
-	hud.show()
-	
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	multiplayer.peer_connected.connect(add_player)
 	multiplayer.peer_disconnected.connect(remove_player)
-	
-	add_player(multiplayer.get_unique_id())
+	$TopCamera.position = Vector3(0, 38, 0)
 	
 	upnp_setup()
 	$spawner/mob_timer.start()
