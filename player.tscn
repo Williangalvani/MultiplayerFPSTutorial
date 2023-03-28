@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ce48a5pcrakeu"]
+[gd_scene load_steps=13 format=3 uid="uid://ce48a5pcrakeu"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_8ljna"]
-[ext_resource type="PackedScene" uid="uid://bsy0xg7umj7tc" path="res://entities/items/magic/fireball.tscn" id="2_57e32"]
+[ext_resource type="PackedScene" path="res://entities/items/magic/fireball.tscn" id="2_57e32"]
 [ext_resource type="PackedScene" uid="uid://b3m6h56kepg06" path="res://staff.tscn" id="4_ii2qh"]
+[ext_resource type="PackedScene" uid="uid://ckww0e4cfr5cd" path="res://entities/components/health.tscn" id="4_lx6iu"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_p4y4a"]
 
@@ -231,10 +232,6 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.5428
 [node name="staff2" parent="Camera3D" instance=ExtResource("4_ii2qh")]
 transform = Transform3D(1, 0, 0, 0, 0.993067, 0.117555, 0, -0.117555, 0.993067, 0.547302, -0.737104, -0.569382)
 
-[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
-target_position = Vector3(0, 0, -50)
-collision_mask = 2
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
 playback_default_blend_time = 0.05
@@ -245,5 +242,7 @@ libraries = {
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_interval = 0.1
 replication_config = SubResource("SceneReplicationConfig_8x264")
+
+[node name="health" parent="." instance=ExtResource("4_lx6iu")]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

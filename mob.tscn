@@ -1,6 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://dap1p34sacwii"]
 
 [ext_resource type="Script" path="res://mob.gd" id="1_55f8s"]
+[ext_resource type="PackedScene" uid="uid://ckww0e4cfr5cd" path="res://entities/components/health.tscn" id="2_f2wem"]
+[ext_resource type="PackedScene" uid="uid://hq2qrbwpkiq8" path="res://entities/components/HealthBar.tscn" id="3_cv0nm"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ksv68"]
 
@@ -19,15 +21,9 @@ properties/1/sync = true
 properties/2/path = NodePath(".:hp")
 properties/2/spawn = true
 properties/2/sync = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_vpkyn"]
-size = Vector2(0.8, 0.1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xasew"]
-shading_mode = 0
-albedo_color = Color(0, 1, 0, 1)
-disable_receive_shadows = true
-billboard_mode = 1
+properties/3/path = NodePath("HealthBar:health_percentage")
+properties/3/spawn = true
+properties/3/sync = true
 
 [node name="mob" type="CharacterBody3D"]
 collision_layer = 3
@@ -45,8 +41,6 @@ replication_config = SubResource("SceneReplicationConfig_hn58k")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
-[node name="hp" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.905796, 0)
-cast_shadow = 0
-mesh = SubResource("QuadMesh_vpkyn")
-surface_material_override/0 = SubResource("StandardMaterial3D_xasew")
+[node name="health" parent="." instance=ExtResource("2_f2wem")]
+
+[node name="HealthBar" parent="." instance=ExtResource("3_cv0nm")]

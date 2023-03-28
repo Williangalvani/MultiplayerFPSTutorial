@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://cme54xqaqd7k"]
 
 [ext_resource type="PackedScene" uid="uid://ckf3250w8jpro" path="res://entities/models/Environment.glb" id="1_p4eel"]
 [ext_resource type="Texture2D" uid="uid://bugwfwhpqfp1n" path="res://addons/kenney_prototype_textures/dark/texture_09.png" id="2_dpxbx"]

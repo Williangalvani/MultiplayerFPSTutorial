@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsy0xg7umj7tc"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Texture2D" uid="uid://cbawhvb7ky3ey" path="res://addons/Shikashi's Fantasy Icons Pack v2/shikashi_atlas.tres" id="1_j4gig"]
-[ext_resource type="PackedScene" uid="uid://bfr5e5h3ovbx6" path="res://entities/effects/projectile.tscn" id="2_mwwte"]
+[ext_resource type="PackedScene" uid="uid://bfr5e5h3ovbx6" path="res://entities/components/projectile.tscn" id="2_mwwte"]
+[ext_resource type="PackedScene" uid="uid://bind7diqoapxd" path="res://entities/components/dealsDamage.tscn" id="3_ymjve"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_kkc5j"]
 radius = 0.184281
@@ -27,6 +28,8 @@ texture = ExtResource("1_j4gig")
 
 [node name="projectile" parent="." instance=ExtResource("2_mwwte")]
 projectile_velocity = 10.0
+
+[node name="dealsDamage" parent="." instance=ExtResource("3_ymjve")]
 
 [node name="fireball" type="Node3D" parent="."]
 

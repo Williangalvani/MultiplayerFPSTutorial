@@ -5,7 +5,6 @@ signal projectile_created(projectile: PackedScene, transform: Transform3D)
 
 @onready var camera = $Camera3D
 @onready var anim_player = $AnimationPlayer
-@onready var raycast = $Camera3D/RayCast3D
 @export var fireball_scene: PackedScene
 
 var health = 3
@@ -41,10 +40,6 @@ func _unhandled_input(event):
 			and anim_player.current_animation != "shoot":
 		play_shoot_effects.rpc()
 		projectile_created.emit(fireball_scene, $Camera3D/projectileSpawnPoint.global_transform)
-		var hit_player = raycast.get_collider()
-		if hit_player:
-			print(hit_player)
-			hit_player.receive_damage.rpc_id(hit_player.get_multiplayer_authority())
 
 func _physics_process(delta):
 	if not is_multiplayer_authority():
@@ -84,15 +79,6 @@ func _physics_process(delta):
 func play_shoot_effects():
 	anim_player.stop()
 	anim_player.play("shoot")
-
-@rpc("any_peer")
-func receive_damage():
-	print("calling player's")
-	health -= 1
-	if health <= 0:
-		health = 3
-		position = Vector3.ZERO
-	health_changed.emit(health)
 
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "shoot":
