@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://hq2qrbwpkiq8"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_tdy1l"]
+size = Vector2(0.8, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ia27j"]
+shading_mode = 0
+albedo_color = Color(0, 1, 0, 1)
+disable_receive_shadows = true
+billboard_mode = 1
+
+[sub_resource type="GDScript" id="GDScript_xaqhe"]
+script/source = "extends MeshInstance3D
+
+var health_component = null
+
+# used to sync in multiplayer
+@export var health_percentage: float = 1.0
+
+func _ready():
+	set_surface_override_material(0, get_surface_override_material(0).duplicate())
+	if not is_multiplayer_authority():
+		return
+	health_component = get_parent().get_node_or_null(\"health\")
+	health_component.health_updated.connect(on_health_updated)
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	update_health()
+	
+
+func update_health():
+	var hp_color: Color = Color(1-health_percentage,health_percentage,0)
+	var material: StandardMaterial3D = get_surface_override_material(0)
+	if material.albedo_color != hp_color:
+		material.albedo_color = hp_color
+		set_surface_override_material(0, material)
+
+
+func on_health_updated(new_health_percentage: float):
+	health_percentage = new_health_percentage
+"
+
+[node name="HealthBar" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.905796, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_tdy1l")
+surface_material_override/0 = SubResource("StandardMaterial3D_ia27j")
+script = SubResource("GDScript_xaqhe")

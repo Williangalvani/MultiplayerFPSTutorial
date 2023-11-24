@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bind7diqoapxd"]
+
+[sub_resource type="GDScript" id="GDScript_2gk4r"]
+script/source = "extends ResourcePreloader
+@export var damage: float = 1.0
+
+func dealDamage(node):
+	var health = node.find_child(\"health\")
+	if not health:
+		return
+	health.reduceBy(damage)
+	
+
+
+func _ready():
+	if not is_multiplayer_authority():
+		return
+	var parent = get_parent()
+	var projectile = parent.find_child(\"projectile\")
+	if not projectile:
+		push_error(\"dealsDamage requires a Projectile Sibling\")
+	print(\"projectile found\")
+	projectile.collided.connect(dealDamage)
+"
+
+[node name="dealsDamage" type="ResourcePreloader"]
+script = SubResource("GDScript_2gk4r")
